@@ -62,7 +62,7 @@ class ProjectilePool {
   update(delta) {
     let newActive = [...this.activeProjectiles];
     let removedCount = 0;
-    this.activeProjectiles.forEach((e, i, a) => {
+    this.activeProjectiles.forEach((e, i) => {
       e.update(delta);
       if (e.timeout <= 0) {
         e.reset();
