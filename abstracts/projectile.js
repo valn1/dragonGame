@@ -9,6 +9,10 @@ class Projectile {
     active: false
   }
 
+  static radiansSpeedToVector(radians, speed) {
+    return [Math.cos(radians)*speed, Math.sin(radians)*speed];
+  }
+
   // new projectiles should only be initialized during construction of a ProjectilePool
   constructor(x, y, vector, sprite, timeout, destroyOnCollision, active) {
     this.x = x || Projectile.default.x;
