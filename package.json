@@ -1,0 +1,23 @@
+{
+  "name": "dragongame",
+  "version": "1.0.0",
+  "description": "dragon game for summer slow jams 2022",
+  "main": "app.js",
+  "scripts": {
+    "server": "http-server -o"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/valn1/dragonGame.git"
+  },
+  "dependencies": {
+    "http-server": "^14.1.0",
+    "pixi.js": "^6.3.2"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/valn1/dragonGame/issues"
+  },
+  "homepage": "https://github.com/valn1/dragonGame#readme"
+}
