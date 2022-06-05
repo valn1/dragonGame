@@ -53,7 +53,6 @@ class ProjectilePool {
   // fetches first inactive projectile from the pool and gives it properties
   create(x, y, vector, sprite, timeout, destroyOnCollision) {
     let p = this.pool.find(e => e.active == false);
-    p.active = true;
     p.activate(x, y, vector, sprite, timeout, destroyOnCollision);
     this.activeProjectiles.push(p);
   }
