@@ -1,5 +1,5 @@
 import Dragon from "./gameObjects/dragon.js";
-import ProjectilePool from "./abstracts.projectile.js";
+import ProjectilePool from "./abstracts/projectile.js";
 
 //setup
 globalThis.app = new PIXI.Application({
