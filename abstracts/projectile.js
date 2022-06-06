@@ -43,8 +43,9 @@ class Projectile {
   }
 
   // this method resets projectile to default values
+  // I don't know if this is going to work correctly
   reset() {
-    this = {...Projectile.default};
+    this.Object = Object.assign(this.Object, Projectile.default);
   }
 }
 
