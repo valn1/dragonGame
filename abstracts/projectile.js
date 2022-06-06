@@ -54,10 +54,26 @@ class ProjectilePool {
     this.activeProjectiles = [];
   }
 
-  // fetches first inactive projectile from the pool and gives it properties
+  // returns first inactive projectile
+  fetch() {
+    return this.pool.find(e => e.active == false);
+  }
+
+  // creates a projectile with manual args
   create(x, y, vector, sprite, timeout, destroyOnCollision) {
-    let p = this.pool.find(e => e.active == false);
+    let p = this.fetch();
     p.activate(x, y, vector, sprite, timeout, destroyOnCollision);
+    this.activeProjectiles.push(p);
+  }
+
+  // version of create which takes a game object as argument to infer position and angle / speed
+  createOnObject(spawnObject, sprite, timeout, destroyOnCollision) {
+    let p = this.fetch();
+    // am I correct to assume zero node is head? may need to update if projectiles can spawn from other places (ie from a claw / tail)
+    p.activate(
+      spawnObject.nodes[0].ax, spawnObject.nodes[0].ay, 
+      Projectile.radiansSpeedToVector(spawnObject.tiltAngle, spawnObject.speed), 
+      sprite, timeout, destroyOnCollision);
     this.activeProjectiles.push(p);
   }
 
