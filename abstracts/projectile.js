@@ -48,7 +48,7 @@ class Projectile {
   }
 }
 
-class ProjectilePool {
+export default class ProjectilePool {
   constructor(size) {
     this.pool = new Array(size).fill(new Projectile());
     this.activeProjectiles = [];
