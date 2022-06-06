@@ -15,10 +15,11 @@ app.stage.scale.set(.5)
 app.stage.rotation = 0
 app.stage.pivot.set(app.screen.width/2, app.screen.height/2);
 let dragon = new Dragon(5);
+window.dragon= dragon;
 dragon.create();
 app.ticker.add(() => {
-    window.app.width=window.innerWidth;
-    window.app.height=window.innerHeight;
+    app.width=window.innerWidth;
+    app.height=window.innerHeight;
 
     dragon.update();
 
