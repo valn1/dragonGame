@@ -60,9 +60,12 @@ class ProjectilePool {
   }
 
   // creates a projectile with manual args
-  create(x, y, vector, sprite, timeout, destroyOnCollision) {
+  create(x, y, angle, speed, sprite, timeout, destroyOnCollision) {
     let p = this.fetch();
-    p.activate(x, y, vector, sprite, timeout, destroyOnCollision);
+    p.activate(
+      x, y, 
+      Projectile.radiansSpeedToVector(angle, speed),
+      sprite, timeout, destroyOnCollision);
     this.activeProjectiles.push(p);
   }
 
