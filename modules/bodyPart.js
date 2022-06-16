@@ -7,11 +7,11 @@ export default class BodyPart extends segment {
     }
 
     skin(url) {
-        this.sprite = PIXI.Sprite.from(url||"../assets/textures/body.png");
+        this.sprite = PIXI.Sprite.from(url||"../assets/textures/Dragon Back Segment.png");
         this.sprite.anchor.set(0.5,0);
         this.sprite.pivot.set(0.5,0);
-        this.sprite.width=50;
-        this.sprite.height=this.length;
+        this.sprite.width=75;
+        this.sprite.height=this.length*1.25;
         globalThis.app.stage.addChild(this.sprite);
     }
 
@@ -22,8 +22,14 @@ export default class BodyPart extends segment {
 
     update() {
         this.getA();
-        this.calculatePointB();
-        this.sprite.rotation = this.getAngle(this.ax, this.ay, this.bx, this.by) - (90 * (Math.PI / 180));
+        super.calculatePointB();
+        if (this.parent) {
+            this.angle=this.getAngle(this.ax, this.ay, this.bx, this.by);
+        }
+        this.sprite.rotation = this.angle - (90 * (Math.PI / 180));
+        if (!this.parent) {
+            console.log(this.ax, this.ay, this.bx, this.by);
+        }
         this.sprite.position.set(this.ax, this.ay);
     }
 
@@ -32,13 +38,6 @@ export default class BodyPart extends segment {
             this.ax = this.parent.bx;
             this.ay = this.parent.by;
         }
-    }
-
-    calculatePointB() {
-        this.bx = this.ax + this.length * ((this.bx - this.ax) /
-            Math.sqrt((this.bx - this.ax) ** 2 + (this.by - this.ay) ** 2));
-        this.by = this.ay + this.length * ((this.by - this.ay) /
-            Math.sqrt((this.bx - this.ax) ** 2 + (this.by - this.ay) ** 2));
     }
 
     getAngle(ax, ay, bx, by) {

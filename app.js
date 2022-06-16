@@ -20,7 +20,7 @@ app.stage.pivot.set(app.screen.width / 2, app.screen.height / 2);
 let projectiles = new ProjectilePool(200);
 
 //setup dragon
-let dragon = new Dragon(5);
+let dragon = new Dragon(10);
 window.dragon = dragon;
 dragon.create();
 

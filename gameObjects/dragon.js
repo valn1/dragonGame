@@ -1,5 +1,5 @@
 import segment from '../modules/bodyPart.js'
-// import branch from '../modules/IKSegmentBranch.js'
+import limb from '../modules/limb.js'
 
 export default class Dragon {
 
@@ -26,16 +26,25 @@ export default class Dragon {
             this.nodes.push(bodyPart);
             !i ? bodyPart.dragon = this : null;
             bodyPart.create();
-            i ? this.nodes[i].skin() : this.nodes[i].skin('../assets/textures/head.png');
+            if (i){
+                if (i===this.nodesNumber-1){
+                    bodyPart.skin('../assets/textures/Dragon Tail.png');
+                }else{
+                    bodyPart.skin();
+                }
 
-            // if (i===3||i===1){
-            //     let appendage=new branch(50,60,this.nodes[i], .3)
-            //     this.branches.push(appendage)
-            //     appendage.create();
-            //     let appendage2 = new branch(50,300,this.nodes[i], .5)
-            //     this.branches.push(appendage2)
-            //     appendage2.create();
-            // }
+            }else{
+                bodyPart.skin('../assets/textures/Dragon Head WIP.png')
+            }
+
+            if (i===5||i===1){
+                let appendage=new limb(50,this.nodes[i], .3,'left');
+                this.branches.push(appendage)
+                appendage.create();
+                let appendage2 = new limb(50,this.nodes[i], .5,'right');
+                this.branches.push(appendage2)
+                appendage2.create();
+            }
         }
 
         window.addEventListener("keydown", this.handleKeyDown.bind(this));
@@ -44,17 +53,18 @@ export default class Dragon {
     }
 
     update() {
+        let head = this.nodes[0];
+        head.angle += this.tiltAngle;
+        this.x = head.bx
+        this.y = head.by
+        head.ax = head.bx + (head.length + this.speed) * Math.cos(head.angle);
+        head.ay = head.by + (head.length + this.speed) * Math.sin(head.angle);
         this.nodes.forEach(node => {
             node.update()
         })
         this.branches.forEach(apendage => {
             apendage.update()
         })
-        this.x = this.nodes[0].bx
-        this.y = this.nodes[0].by
-        this.nodes[0].angle += this.tiltAngle || 0;
-        this.nodes[0].ax = this.nodes[0].bx + (this.nodes[0].length + this.speed) * Math.cos(this.nodes[0].angle);
-        this.nodes[0].ay = this.nodes[0].by + (this.nodes[0].length + this.speed) * Math.sin(this.nodes[0].angle);
     }
 
     handleKeyDown(e) {
