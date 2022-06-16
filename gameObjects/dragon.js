@@ -2,6 +2,7 @@ import segment from '../modules/bodyPart.js'
 // import branch from '../modules/IKSegmentBranch.js'
 
 export default class Dragon {
+
     constructor(nodesNumber) {
         this.nodesNumber = nodesNumber;
         this.x = window.innerWidth / 2;
@@ -81,7 +82,6 @@ export default class Dragon {
             case 68:
                 this.tiltAngle = 0;
                 break;
-
         }
     }
 }
