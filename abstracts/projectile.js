@@ -14,22 +14,26 @@ class Projectile {
   }
 
   // new projectiles should only be initialized during construction of a ProjectilePool
-  constructor(x, y, vector, sprite, timeout, destroyOnCollision, active) {
+  constructor(x, y, vector, spriteUrl, timeout, destroyOnCollision, active) {
     this.x = x || Projectile.default.x;
     this.y = y || Projectile.default.y;
     this.vector = vector || Projectile.default.vector;
-    this.sprite =  sprite || Projectile.default.sprite;
+    this.sprite =  PIXI.sprite.from(spriteUrl) || Projectile.default.sprite;
+    this.sprite.anchor.set(0.5);
+    this.sprite.pivot.set(0.5);
     this.timeout = timeout || Projectile.default.timeout;
     this.destroyOnCollision = destroyOnCollision || Projectile.default.destroyOnCollision;
     this.active = active || Projectile.default.active;
   }
 
   // called by ProjectilePool when creating a new projectile - active indicates it should be rendered
-  activate(x, y, vector, sprite, timeout, destroyOnCollision) {
+  activate(x, y, vector, spriteUrl, timeout, destroyOnCollision) {
     this.x = x || this.x;
     this.y = y || this.y;
     this.vector = vector || this.vector;
-    this.sprite = sprite || this.sprite;
+    this.sprite = PIXI.sprite.from(spriteUrl) || this.sprite;
+    this.sprite.anchor.set(0.5);
+    this.sprite.pivot.set(0.5);
     this.timeout = timeout || this.timeout;
     this.destroyOnCollision = destroyOnCollision || this.destroyOnCollision;
     this.active = true;
@@ -39,6 +43,7 @@ class Projectile {
   update(delta) {
     this.x = this.x + this.vector[0] * delta;
     this.y = this.y + this.vector[1] * delta;
+    this.sprite.position.set(this.x, this.y);
     this.timeout -= delta;
   }
 
