@@ -25,10 +25,9 @@ export default class BodyPart extends segment {
         super.calculatePointB();
         if (this.parent) {
             this.angle=this.getAngle(this.ax, this.ay, this.bx, this.by);
-        }
-        this.sprite.rotation = this.angle - (90 * (Math.PI / 180));
-        if (!this.parent) {
-            console.log(this.ax, this.ay, this.bx, this.by);
+            this.sprite.rotation = this.angle - (90 * (Math.PI / 180));
+        }else{
+            this.sprite.rotation = this.angle + (90 * (Math.PI / 180));
         }
         this.sprite.position.set(this.ax, this.ay);
     }

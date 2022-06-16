@@ -17,7 +17,7 @@ app.stage.rotation = 0
 app.stage.pivot.set(app.screen.width / 2, app.screen.height / 2);
 
 //setup projectile pool
-let projectiles = new ProjectilePool(200);
+let projectiles = new ProjectilePool(2000);
 
 //setup dragon
 let dragon = new Dragon(10);
@@ -36,7 +36,7 @@ app.ticker.add(() => {
     app.width = window.innerWidth;
     app.height = window.innerHeight;
 
-    dragon.update();
+    dragon.update(app.ticker.deltaMS/1000);
     projectiles.update(app.ticker.deltaMS/1000);
 
     app.stage.pivot.set(dragon.x, dragon.y);
@@ -49,7 +49,10 @@ window.addEventListener("keydown", handleKeyDown.bind(this));
 function handleKeyDown(e) {
     switch (e.keyCode) {
       case 32:
-        projectiles.createOnObject(dragon, 50, '../assets/textures/Fireball.png', 2.5, true);
+        if (dragon.fireCooldown < 0) {
+          projectiles.createOnObject(dragon, 1000, '../assets/textures/Fireball.png', 2, 5, true);
+          dragon.fireCooldown = .4;
+        }
         break;
     }
 }

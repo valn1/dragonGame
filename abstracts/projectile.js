@@ -13,6 +13,10 @@ class Projectile {
     return [Math.cos(radians)*speed, Math.sin(radians)*speed];
   }
 
+  static vectorToRadians(vector) {
+    return Math.atan2(vector[1], vector[0]) + Math.PI / 2;
+  }
+
   // new projectiles should only be initialized during construction of a ProjectilePool
   constructor() {
     this.x = Projectile.default.x;
@@ -25,13 +29,15 @@ class Projectile {
   }
 
   // called by ProjectilePool when creating a new projectile - active indicates it should be rendered
-  activate(x, y, vector, spriteUrl, timeout, destroyOnCollision) {
+  activate(x, y, vector, spriteUrl, scale, timeout, destroyOnCollision) {
     this.x = x || this.x;
     this.y = y || this.y;
     this.vector = vector || this.vector;
     this.sprite = PIXI.Sprite.from(spriteUrl) || this.sprite;
     this.sprite.anchor.set(0.5);
     this.sprite.pivot.set(0.5);
+    this.sprite.scale.set(scale);
+    this.sprite.rotation = Projectile.vectorToRadians(vector);
     globalThis.app.stage.addChild(this.sprite);
     this.timeout = timeout || this.timeout;
     this.destroyOnCollision = destroyOnCollision || this.destroyOnCollision;
@@ -85,12 +91,12 @@ export default class ProjectilePool {
 
   // version of create which takes a game object as argument to infer position and angle / speed
   // dSpeed is additional speed of the projectile
-  createOnObject(spawnObject, dSpeed, spriteUrl, timeout, destroyOnCollision) {
+  createOnObject(spawnObject, dSpeed, spriteUrl, scale, timeout, destroyOnCollision) {
     let p = this.fetch();
     p.activate(
       spawnObject.nodes[0].ax, spawnObject.nodes[0].ay, 
-      Projectile.radiansSpeedToVector(Math.random()*6.28, spawnObject.speed + dSpeed), 
-      spriteUrl, timeout, destroyOnCollision);
+      Projectile.radiansSpeedToVector(spawnObject.head.angle, spawnObject.speed + dSpeed), 
+      spriteUrl, scale, timeout, destroyOnCollision);
     this.activeProjectiles.push(p);
   }
 

@@ -9,8 +9,13 @@ export default class Dragon {
         this.y = window.innerHeight / 2;
         this.nodes = [];
         this.branches = [];
-        this.speed = 0;
+        this.currentSpeed = 0;
+        this.speed = 800;
+        this.moving = false;
+        this.deceleration = 600;
         this.tiltAngle = 0;
+        this.head=null;
+        this.fireCooldown = 0;
     }
 
     create() {
@@ -38,7 +43,7 @@ export default class Dragon {
             }
 
             if (i===5||i===1){
-                let appendage=new limb(50,this.nodes[i], .3,'left');
+                let appendage=new limb(50,this.nodes[i], .5,'left');
                 this.branches.push(appendage)
                 appendage.create();
                 let appendage2 = new limb(50,this.nodes[i], .5,'right');
@@ -52,31 +57,34 @@ export default class Dragon {
 
     }
 
-    update() {
-        let head = this.nodes[0];
-        head.angle += this.tiltAngle;
-        this.x = head.bx
-        this.y = head.by
-        head.ax = head.bx + (head.length + this.speed) * Math.cos(head.angle);
-        head.ay = head.by + (head.length + this.speed) * Math.sin(head.angle);
+    update(delta) {
+        this.head = this.nodes[0];
+        this.head.angle += this.tiltAngle * delta;
+        this.x = this.head.bx
+        this.y = this.head.by
+        this.head.ax = this.head.bx + (this.head.length + this.currentSpeed * delta) * Math.cos(this.head.angle);
+        this.head.ay = this.head.by + (this.head.length + this.currentSpeed * delta) * Math.sin(this.head.angle);
         this.nodes.forEach(node => {
             node.update()
         })
         this.branches.forEach(apendage => {
             apendage.update()
         })
+        this.fireCooldown -= delta;
+        if (!this.moving) this.currentSpeed = Math.max(this.currentSpeed - this.deceleration * delta, 0);
     }
 
     handleKeyDown(e) {
         switch (e.keyCode) {
             case 87:
-                this.speed = 20;
+                this.currentSpeed = this.speed;
+                this.moving = true;
                 break;
             case 65:
-                this.tiltAngle = -0.05;
+                this.tiltAngle = -3;
                 break;
             case 68:
-                this.tiltAngle = 0.05;
+                this.tiltAngle = 3;
                 break;
         }
     }
@@ -84,7 +92,7 @@ export default class Dragon {
     handleKeyUp(e) {
         switch (e.keyCode) {
             case 87:
-                this.speed = 0;
+                this.moving = false;
                 break;
             case 65:
                 this.tiltAngle = 0;
