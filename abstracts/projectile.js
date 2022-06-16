@@ -37,8 +37,8 @@ class Projectile {
 
   // takes delta time and updates position
   update(delta) {
-    this.x = this.x + this.vector[0];
-    this.y = this.y + this.vector[1];
+    this.x = this.x + this.vector[0] * delta;
+    this.y = this.y + this.vector[1] * delta;
     this.timeout -= delta;
   }
 
