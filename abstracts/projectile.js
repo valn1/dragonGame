@@ -89,7 +89,7 @@ export default class ProjectilePool {
     let p = this.fetch();
     p.activate(
       spawnObject.nodes[0].ax, spawnObject.nodes[0].ay, 
-      Projectile.radiansSpeedToVector(spawnObject.tiltAngle, spawnObject.speed + dSpeed), 
+      Projectile.radiansSpeedToVector(Math.random()*6.28, spawnObject.speed + dSpeed), 
       spriteUrl, timeout, destroyOnCollision);
     this.activeProjectiles.push(p);
   }
