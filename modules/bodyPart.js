@@ -11,7 +11,7 @@ export default class BodyPart extends segment {
         this.sprite.anchor.set(0.5,0);
         this.sprite.pivot.set(0.5,0);
         this.sprite.width=75;
-        this.sprite.height=this.length*1.25;
+        this.sprite.height=this.length*1.1;
         globalThis.app.stage.addChild(this.sprite);
     }
 
