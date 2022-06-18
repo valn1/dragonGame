@@ -19,13 +19,7 @@ class Projectile {
 
   // new projectiles should only be initialized during construction of a ProjectilePool
   constructor() {
-    this.x = Projectile.default.x;
-    this.y = Projectile.default.y;
-    this.vector = Projectile.default.vector;
-    this.sprite = Projectile.default.sprite;
-    this.timeout = Projectile.default.timeout;
-    this.destroyOnCollision = Projectile.default.destroyOnCollision;
-    this.active = Projectile.default.active;
+    Object.assign(this, Projectile.default);
   }
 
   // called by ProjectilePool when creating a new projectile - active indicates it should be rendered
@@ -42,7 +36,6 @@ class Projectile {
     this.timeout = timeout || this.timeout;
     this.destroyOnCollision = destroyOnCollision || this.destroyOnCollision;
     this.active = true;
-    console.log('activated projectile');
   }
 
   // takes delta time and updates position
@@ -57,13 +50,7 @@ class Projectile {
 
   // this method resets projectile to default values
   reset() {
-    this.x = Projectile.default.x;
-    this.y = Projectile.default.y;
-    this.vector = Projectile.default.vector;
-    this.sprite = Projectile.default.sprite;
-    this.timeout = Projectile.default.timeout;
-    this.destroyOnCollision = Projectile.default.destroyOnCollision;
-    this.active = Projectile.default.active;
+    Object.assign(this, Projectile.default);
   }
 }
 
