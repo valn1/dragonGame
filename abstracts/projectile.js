@@ -6,7 +6,7 @@ class Projectile {
     sprite: null,
     timeout: 0,
     destroyOnCollision: true,
-    active: false
+    active: false // active indicates it should be rendered
   }
 
   static radiansSpeedToVector(radians, speed) {
@@ -22,7 +22,7 @@ class Projectile {
     Object.assign(this, Projectile.default);
   }
 
-  // called by ProjectilePool when creating a new projectile - active indicates it should be rendered
+  // called by ProjectilePool when creating a new projectile - 
   activate(x, y, vector, spriteUrl, scale, timeout, destroyOnCollision) {
     this.x = x || this.x;
     this.y = y || this.y;
